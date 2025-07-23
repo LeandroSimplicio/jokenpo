@@ -3,11 +3,19 @@ const result = document.querySelector(".result");
 const score = document.querySelector(".score");
 const opponentScore = document.querySelector(".opponent-score");
 const opponentChoiceDisplay = document.querySelector(".opponent-choice span");
+
 let playerScore = 0;
 let opponentScoreValue = 0;
 let playerChoice;
 let opponentChoice;
-const choices = ["rock", "paper", "scissors"];
+
+const GAME_OPTIONS = {
+  ROCK: "rock",
+  PAPER: "paper",
+  SCISSORS: "scissors"
+}
+
+const choices = Object.values(GAME_OPTIONS);
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     playerChoice = button.id;
@@ -15,13 +23,14 @@ buttons.forEach((button) => {
     playGame(playerChoice, opponentChoice);
   });
 });
+
 function playGame(playerChoice, opponentChoice) {
   if (playerChoice === opponentChoice) {
     resultMessage = "Empate!";
   } else if (
-    (playerChoice === "rock" && opponentChoice === "scissors") ||
-    (playerChoice === "paper" && opponentChoice === "rock") ||
-    (playerChoice === "scissors" && opponentChoice === "paper")
+    (playerChoice === GAME_OPTIONS.ROCK && opponentChoice === GAME_OPTIONS.SCISSORS) ||
+    (playerChoice === GAME_OPTIONS.PAPER && opponentChoice === GAME_OPTIONS.ROCK) ||
+    (playerChoice === GAME_OPTIONS.SCISSORS && opponentChoice === GAME_OPTIONS.PAPER)
   ) {
     resultMessage = "Você ganhou!";
     playerScore++;
@@ -42,7 +51,9 @@ function updateUI() {
   opponentScore.querySelector("span").textContent = opponentScoreValue;
   opponentChoiceDisplay.textContent = opponentChoice;
 }
+
 updateUI();
+
 // Adiciona um evento de teclado para reiniciar o jogo
 document.addEventListener("keydown", (event) => {
   if (event.key === "r" || event.key === "R") {
